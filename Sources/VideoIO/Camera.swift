@@ -101,7 +101,7 @@ public class Camera {
         return self.audioDeviceInput?.device
     }
     
-    public func switchToVideoCaptureDevice(with position: AVCaptureDevice.Position, preferredDeviceTypes: [AVCaptureDevice.DeviceType] = []) throws {
+    open func switchToVideoCaptureDevice(with position: AVCaptureDevice.Position, preferredDeviceTypes: [AVCaptureDevice.DeviceType] = []) throws {
         let deviceTypes: [AVCaptureDevice.DeviceType]
         if preferredDeviceTypes.count == 0 {
             if defaultCameraDeviceTypes.count == 0 {
@@ -110,13 +110,7 @@ public class Camera {
                 #elseif os(tvOS)
                 deviceTypes = []
                 #else
-                if #available(iOS 11.1, *) {
-                    deviceTypes = [.builtInDualCamera, .builtInTrueDepthCamera, .builtInWideAngleCamera]
-                } else if #available(iOS 10.2, *) {
-                    deviceTypes = [.builtInDualCamera, .builtInWideAngleCamera]
-                } else {
-                    deviceTypes = [.builtInWideAngleCamera]
-                }
+                deviceTypes = [.builtInDualCamera, .builtInTrueDepthCamera, .builtInWideAngleCamera]
                 #endif
             } else {
                 deviceTypes = defaultCameraDeviceTypes
@@ -132,7 +126,7 @@ public class Camera {
         }
     }
     
-    public func switchToVideoCaptureDevice(_ device: AVCaptureDevice) throws {
+    open func switchToVideoCaptureDevice(_ device: AVCaptureDevice) throws {
         guard device.hasMediaType(.video) else {
             throw Error.noRequiredMediaTypeFoundOnDevice
         }
